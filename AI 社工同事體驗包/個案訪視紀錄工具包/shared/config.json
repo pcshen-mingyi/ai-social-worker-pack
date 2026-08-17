@@ -1,0 +1,9 @@
+{
+  "case_data_xlsx": "../明怡服務紀錄資料夾/個案資料表-demo.xlsx",
+  "supervisor_email": "wentest07@gmail.com",
+  "default_staff_name": "林社工",
+  "external_system_url": "https://deploy-nine-blue-62.vercel.app",
+  "draft_dir": "../個人工作",
+  "raw_transcript_dir": "../個人工作/訪視原始資料",
+  "archive_dir": "../明怡服務紀錄資料夾/已歸檔"
+}

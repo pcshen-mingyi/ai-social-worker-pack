@@ -1,0 +1,6 @@
+shared/.credentials/
+shared/config.json
+.claude/skills/case-visit-approval/references/pending_approvals.json
+.DS_Store
+__pycache__/
+*.pyc
