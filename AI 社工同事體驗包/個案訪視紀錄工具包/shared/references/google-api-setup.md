@@ -73,6 +73,8 @@ https://www.googleapis.com/auth/gmail.modify
 python3 shared/scripts/google_auth.py
 ```
 
+（Windows 若提示找不到 `python3`，改打 `python shared/scripts/google_auth.py`。）
+
 第一次執行會跳出瀏覽器要你登入、按「允許」，成功後會在同一個資料夾產生
 `token.json`（之後自動使用、過期會自動 refresh，不用重跑）。
 

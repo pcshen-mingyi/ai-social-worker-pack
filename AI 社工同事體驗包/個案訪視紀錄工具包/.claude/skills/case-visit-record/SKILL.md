@@ -47,8 +47,10 @@ python3 shared/scripts/ensure_dependencies.py
 ### 1. 複製範本
 
 把 `templates/明怡個案紀錄表-demo版.docx` 複製一份到 `shared/config.json` 的
-`draft_dir`（尚未核准的草稿都放這裡），檔名建議 `{案號}_訪視紀錄_{日期}.docx`。
-**不要直接修改範本檔本身。**
+`draft_dir`（尚未核准的草稿都放這裡），檔名建議 `{案號}_訪視紀錄_{日期}.docx`，
+**日期一律用 `YYYYMMDD`（例如 `20260804`），不要用含 `/` 的格式**——`/` 是路徑
+分隔符號，放進檔名會存錯位置或直接失敗，之後 `case-visit-approval` 歸檔時
+也是統一用這個格式對應。**不要直接修改範本檔本身。**
 
 ### 2. 填身分欄位（不經過你）
 

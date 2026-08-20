@@ -63,10 +63,15 @@ python3 scripts/classify_scope.py --case-id CASE-001 --data {shared/config.json 
 
 依 `scripts/render_genogram.py` 開頭的 JSON 格式寫入暫存檔，然後執行：
 
+> 暫存檔請放在**工具包根目錄**下的 `.tmp/`（相對路徑，跨平台皆可用），
+> 不要用 `/tmp/`——Windows 沒有這個目錄，會直接寫檔失敗。第一次用先建立：
+> `mkdir -p .tmp`（Claude Code 的 Bash 工具在 Windows 上也是跑 Git Bash，
+> 這個指令一樣能用）。
+
 ```bash
 python3 scripts/render_genogram.py \
-  --data /tmp/family.json \
-  --png /tmp/family.png \
+  --data .tmp/family.json \
+  --png .tmp/family.png \
   --embed-docx {case-visit-record 產出的 docx} \
   --out {同一份 docx}
 ```

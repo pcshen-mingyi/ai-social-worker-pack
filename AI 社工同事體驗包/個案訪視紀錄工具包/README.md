@@ -72,7 +72,8 @@ Google 點一下——這是把「用你的帳號寄信」的權限交出去，A
 2. 設定 OAuth 同意畫面、加入 `gmail.send` / `gmail.modify` 兩個範圍
 3. 建立「電腦版應用程式」類型的 OAuth 用戶端 ID，下載成 `client_secret.json`
 4. 放到 `shared/.credentials/client_secret.json`
-5. 執行 `python3 shared/scripts/google_auth.py`，跳出瀏覽器按「允許」
+5. 執行 `python3 shared/scripts/google_auth.py`（Windows 若提示找不到 `python3`，
+   改打 `python shared/scripts/google_auth.py`），跳出瀏覽器按「允許」
 
 做完之後（不管是自動還是手動），③④的 Gmail 相關功能就能正常運作。
 
@@ -162,7 +163,8 @@ Claude **不會直接寄出**，先念一次信件摘要給你聽（主旨、現
 
 ## 如果之後要換成自己機構的真實資料
 
-重跑 `python3 shared/scripts/setup_config.py`，會用問答的方式讓你重新指定
+重跑 `python3 shared/scripts/setup_config.py`（Windows 若提示找不到 `python3`，
+改打 `python shared/scripts/setup_config.py`），會用問答的方式讓你重新指定
 個案資料表路徑、主管信箱、姓名、草稿/歸檔資料夾，取代這份體驗用的預設值。
 
 ## 資料夾結構（工具包內部）

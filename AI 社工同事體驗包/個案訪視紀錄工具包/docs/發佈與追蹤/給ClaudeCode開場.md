@@ -1,5 +1,22 @@
 # 給 Claude Code 的開場指令
 
+> ## ✅ 2026-08-20 更新：下面那則「暫緩」已經不成立
+>
+> PC 改變決定，M1 已實際執行：公開 repo `pcshen-mingyi/ai-social-worker-pack`
+> 已建立、`v1.0` release 已發出，學員固定下載連結為
+> `https://github.com/pcshen-mingyi/ai-social-worker-pack/releases/latest/download/AI-social-worker-pack.zip`
+>
+> 下載追蹤也已接上 MYmate 既有的 Apps Script（多來源改造，社工包寫進獨立分頁
+> 「下載-社工體驗包」，不影響 MYmate 的「下載」分頁與漏斗公式）——當初「要動到
+> 正式後端、不成比例」的顧慮實際上是誤判，沿用既有機制只是多加一列設定。
+> 程式碼已改好並在本機驗證通過，雲端部署待有 Google 權限者執行。
+>
+> **仍然沒做**：啟用／完成事件回報（M2 的 telemetry 端），所以目前只有下載數，
+> 沒有安裝率漏斗。
+>
+> 完整處理過程見專案資料夾
+> `_發布/2026-08-20_GitHub發布與下載追蹤_處理紀錄.md`。
+
 > ## ⚠️ 2026-08-13：先不要用這份開場指令
 >
 > PC 判斷目前使用範圍就是「AI Builder 成長營」這一班（人數已知、可直接問學員），
