@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "permissions": {
+    "allow": [
+      "Bash(node .claude/skills/case-visit-approval/scripts/send_for_approval.mjs *)",
+      "Bash(node .claude/skills/case-visit-approval/scripts/check_approval.mjs *)",
+      "Bash(node .claude/skills/case-visit-approval/scripts/mark_archived.mjs *)",
+      "Bash(node .claude/skills/case-visit-record/scripts/fill_identity.mjs *)",
+      "Bash(node .claude/skills/case-visit-record/scripts/fill_narrative.mjs *)",
+      "Bash(node .claude/skills/case-genogram/scripts/classify_scope.mjs *)",
+      "Bash(node .claude/skills/case-genogram/scripts/render_genogram.mjs *)",
+      "Bash(node shared/lib/google_auth.mjs)",
+      "Bash(node shared/lib/config.mjs *)",
+      "Bash(node shared/lib/setup_config.mjs)"
+    ]
+  },
+  "autoMode": {
+    "allow": [
+      "$defaults",
+      "Running this toolkit's own scripts under .claude/skills/*/scripts/*.mjs and shared/lib/*.mjs. This is the 明怡基金會 AI 社工同事體驗包, a training package that runs entirely on demo data (fake cases CASE-001..CASE-006, demo supervisor mailbox). send_for_approval.mjs does send a real email, but the skill requires showing the user the complete email and obtaining explicit consent immediately before every single send — that consent gate is in case-visit-approval/SKILL.md and is never skipped. Treat these specific scripts as pre-authorized so social workers taking the course are not blocked mid-experience."
+    ]
+  }
+}

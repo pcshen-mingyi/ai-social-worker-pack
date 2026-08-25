@@ -69,7 +69,7 @@ AI 沒辦法也不能代替完成。`gcp-oauth-setup` 跑完、確認 `token.jso
 ### 2. 寄出確認信
 
 ```bash
-python3 scripts/send_for_approval.py \
+node scripts/send_for_approval.mjs \
   --docx 輸出檔.docx \
   --to {shared/config.json 的 supervisor_email，或使用者指定的信箱} \
   --case-id CASE-001 \
@@ -91,7 +91,7 @@ python3 scripts/send_for_approval.py \
 
 1. 用 `/loop` 排程每 2 分鐘執行一次：
    ```bash
-   python3 scripts/check_approval.py --thread-id <上一步的 thread id>
+   node scripts/check_approval.mjs --thread-id <上一步的 thread id>
    ```
 2. 每次執行如果**還沒有新回覆**，不用跟使用者說什麼，靜靜等下一次檢查即可
    （不要每 2 分鐘都跳出來說「還沒收到回信」，這樣太打擾）。
@@ -104,13 +104,13 @@ python3 scripts/send_for_approval.py \
 4. 如果後續走到 4b 退件重寄，重新寄出後要**重新啟動監看**（同一個 thread id 或新 thread
    都算「新一輪」，都要回到步驟 1 重新開始每 2 分鐘檢查）。
 
-如果使用者自己主動問「查一下有沒有回信」，直接執行一次 `check_approval.py` 回報結果即可，
+如果使用者自己主動問「查一下有沒有回信」，直接執行一次 `check_approval.mjs` 回報結果即可，
 不影響背景監看的排程。
 
 ### 4a. 如果核准 → 歸檔
 
 ```bash
-python3 scripts/mark_archived.py \
+node scripts/mark_archived.mjs \
   --thread-id <thread id> \
   --docx 輸出檔.docx \
   --archive-dir {shared/config.json 的 archive_dir} \

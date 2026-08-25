@@ -2,7 +2,7 @@
 
 `case-visit-approval` 需要直接呼叫 Gmail API（不是透過 MCP 工具）寄送/監看主管確認信，
 所以每個要用這個 skill 包的人都需要**自己**在 Google Cloud 建一組 OAuth 憑證。
-這份文件記錄完整步驟，之後可以照抄，也是 `shared/scripts/google_auth.py` 的前置設定。
+這份文件記錄完整步驟，之後可以照抄，也是 `shared/lib/google_auth.mjs` 的前置設定。
 
 訪視紀錄 docx 是直接附加在確認信裡寄出，不會上傳到 Drive，所以不需要 Drive API。
 
@@ -60,7 +60,8 @@ https://www.googleapis.com/auth/gmail.modify
 
 1. 「建立憑證」→「OAuth 用戶端 ID」
 2. 應用程式類型選「**電腦版應用程式**」（舊版介面叫「桌面應用程式」／Desktop app）
-   ——本機腳本用 `InstalledAppFlow` 跑一次性授權，不需要 redirect URI
+   ——本機腳本用 loopback（`http://127.0.0.1:<隨機port>`）跑一次性授權，
+   不需要自己填 redirect URI
 3. 建立後下載 JSON，重新命名成 `client_secret.json`
 
 ## 6. 放到正確路徑、跑本機授權
@@ -70,10 +71,10 @@ https://www.googleapis.com/auth/gmail.modify
 然後執行：
 
 ```bash
-python3 shared/scripts/google_auth.py
+node shared/lib/google_auth.mjs
 ```
 
-（Windows 若提示找不到 `python3`，改打 `python shared/scripts/google_auth.py`。）
+（`node` 在 Mac 與 Windows 都是同一個指令，不需要另外安裝任何東西。）
 
 第一次執行會跳出瀏覽器要你登入、按「允許」，成功後會在同一個資料夾產生
 `token.json`（之後自動使用、過期會自動 refresh，不用重跑）。

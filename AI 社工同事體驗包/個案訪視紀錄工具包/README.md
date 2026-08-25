@@ -40,8 +40,12 @@ AI 社工同事體驗包/
 
 ## 體驗前不需要準備任何東西
 
-Python 套件這些技術上的東西，**Claude Code 第一次執行時會
-自動檢查並安裝**，不需要你自己開終端機裝任何東西。
+**真的什麼都不用裝。** 不需要 Python、不需要 pip、不需要 npm，
+也沒有「第一次執行要先安裝」的步驟。
+
+所有腳本都用 Node.js 寫成，而 Claude Code 本身就帶 Node。畫家系圖需要的
+中文字型與程式庫都已經放在這個資料夾裡（`shared/assets/`、`shared/vendor/`，
+約 600KB），跟著資料夾一起帶走就能用。
 
 其他設定（個案資料表路徑、主管信箱、你的姓名、系統網址、草稿/歸檔資料夾）
 `shared/config.json` 都已經幫你填好體驗用的值，**不需要另外設定**：
@@ -72,8 +76,7 @@ Google 點一下——這是把「用你的帳號寄信」的權限交出去，A
 2. 設定 OAuth 同意畫面、加入 `gmail.send` / `gmail.modify` 兩個範圍
 3. 建立「電腦版應用程式」類型的 OAuth 用戶端 ID，下載成 `client_secret.json`
 4. 放到 `shared/.credentials/client_secret.json`
-5. 執行 `python3 shared/scripts/google_auth.py`（Windows 若提示找不到 `python3`，
-   改打 `python shared/scripts/google_auth.py`），跳出瀏覽器按「允許」
+5. 執行 `node shared/lib/google_auth.mjs`，跳出瀏覽器按「允許」
 
 做完之後（不管是自動還是手動），③④的 Gmail 相關功能就能正常運作。
 
@@ -155,7 +158,7 @@ Claude **不會直接寄出**，先念一次信件摘要給你聽（主旨、現
 ## 重要安全原則（已內建在 skill 裡，不需要你額外注意，但你應該知道）
 
 - **身分資料（姓名/身分證字號/電話/地址）不會出現在對話紀錄裡**——
-  ①的 `fill_identity.py` 直接讀 Excel 寫入 docx，Claude 只看得到「成功/失敗」
+  ①的 `fill_identity.mjs` 直接讀 Excel 寫入 docx，Claude 只看得到「成功/失敗」
 - **寄信前一定會先跟你確認內容**——③寄出確認信之前，Claude 會先念一次摘要
   給你聽，你同意了才會真的寄出
 - **最後登打系統的「提交」按鈕一定要你自己按**——④會把表單填好、截圖給你看，
@@ -163,8 +166,7 @@ Claude **不會直接寄出**，先念一次信件摘要給你聽（主旨、現
 
 ## 如果之後要換成自己機構的真實資料
 
-重跑 `python3 shared/scripts/setup_config.py`（Windows 若提示找不到 `python3`，
-改打 `python shared/scripts/setup_config.py`），會用問答的方式讓你重新指定
+重跑 `node shared/lib/setup_config.mjs`，會用問答的方式讓你重新指定
 個案資料表路徑、主管信箱、姓名、草稿/歸檔資料夾，取代這份體驗用的預設值。
 
 ## 資料夾結構（工具包內部）
@@ -175,10 +177,16 @@ Claude **不會直接寄出**，先念一次信件摘要給你聽（主旨、現
 ├── CLAUDE.md                          ← 給 Claude 看的專案規則，不用特別去讀
 ├── shared/
 │   ├── config.json                    ← 體驗用設定（已預先填好）
-│   ├── scripts/
-│   │   ├── setup_config.py            ← 之後要換成真實資料時才需要跑
-│   │   ├── load_config.py             ← 給其他腳本 import 用
-│   │   └── google_auth.py             ← Gmail OAuth
+│   ├── lib/                           ← 共用程式（Node.js，零安裝）
+│   │   ├── config.mjs                 ← 讀設定，給其他腳本 import
+│   │   ├── setup_config.mjs           ← 之後要換成真實資料時才需要跑
+│   │   ├── google_auth.mjs            ← Gmail OAuth 與 API
+│   │   ├── mime.mjs                   ← 組含附件的信件
+│   │   ├── docx.mjs / xlsx.mjs / zip.mjs ← 讀寫 Word 與 Excel
+│   │   ├── raster.mjs                 ← 畫家系圖並輸出 PNG
+│   │   └── cli.mjs                    ← 參數解析
+│   ├── assets/                        ← 中文字型（子集 336KB）與其授權
+│   ├── vendor/                        ← 讀字型輪廓的程式庫（純 JS，Mac/Windows 通用）
 │   ├── references/google-api-setup.md ← Gmail API 完整設定步驟
 │   └── .credentials/                  ← 走到③第一次授權時才會自動產生，體驗前不用準備
 └── .claude/skills/                    ← Claude Code 開這個資料夾會自動讀到，不用額外安裝

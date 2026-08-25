@@ -1,7 +1,7 @@
 # 範本結構參考
 
 `templates/明怡個案紀錄表-demo版.docx` 只有一個表格（`doc.tables[0]`），共 16 列，
-用 `python-docx` 開啟後各列（row index）對應如下：
+各列（row index）對應如下（`shared/lib/docx.mjs` 的欄位索引與此一致）：
 
 | row | 內容 |
 |---|---|
@@ -22,8 +22,8 @@
 | 14 | 「家系圖」標題列 |
 | 15 | 家系圖圖例文字（家系圖圖片由 case-genogram skill 插入這一列） |
 
-row 0–9 是「身分欄位」，一律透過 `scripts/fill_identity.py` 寫入，不經過模型。
-row 11、13 是「敘事欄位」，透過 `scripts/fill_narrative.py` 寫入，內容由模型依逐字稿草擬。
+row 0–9 是「身分欄位」，一律透過 `scripts/fill_identity.mjs` 寫入，不經過模型。
+row 11、13 是「敘事欄位」，透過 `scripts/fill_narrative.mjs` 寫入，內容由模型依逐字稿草擬。
 
 ## row 11（訪視紀錄本文）段落順序
 

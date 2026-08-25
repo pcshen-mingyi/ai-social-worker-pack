@@ -30,7 +30,7 @@ description: 從家訪逐字稿或個案紀錄萃取家庭成員與關係，自�
 執行：
 
 ```bash
-python3 scripts/classify_scope.py --case-id CASE-001 --data {shared/config.json 的 case_data_xlsx}
+node scripts/classify_scope.mjs --case-id CASE-001 --data {shared/config.json 的 case_data_xlsx}
 ```
 
 （`--data` 路徑同 `case-visit-record` 步驟 2 用的同一份 xlsx）。回傳的分類只會是
@@ -61,7 +61,7 @@ python3 scripts/classify_scope.py --case-id CASE-001 --data {shared/config.json 
 
 ### 3. 寫成 JSON 並畫圖
 
-依 `scripts/render_genogram.py` 開頭的 JSON 格式寫入暫存檔，然後執行：
+依 `scripts/render_genogram.mjs` 開頭的 JSON 格式寫入暫存檔，然後執行：
 
 > 暫存檔請放在**工具包根目錄**下的 `.tmp/`（相對路徑，跨平台皆可用），
 > 不要用 `/tmp/`——Windows 沒有這個目錄，會直接寫檔失敗。第一次用先建立：
@@ -69,7 +69,7 @@ python3 scripts/classify_scope.py --case-id CASE-001 --data {shared/config.json 
 > 這個指令一樣能用）。
 
 ```bash
-python3 scripts/render_genogram.py \
+node scripts/render_genogram.mjs \
   --data .tmp/family.json \
   --png .tmp/family.png \
   --embed-docx {case-visit-record 產出的 docx} \

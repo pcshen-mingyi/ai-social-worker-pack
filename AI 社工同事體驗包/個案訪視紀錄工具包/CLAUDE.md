@@ -42,25 +42,22 @@ shared/scripts/         跨 skill 共用（環境檢查、setup、Gmail OAuth）
 - demo 素材案號固定：`個人工作/訪視原始資料/` 底下的 `CASE-001 訪視逐字稿.docx`
   對應 `CASE-001`、`CASE-006 訪視逐字稿.docx` 對應 `CASE-006`；使用者沒給
   案號又不是用這兩個 demo 檔時，先問清楚案號，不要用逐字稿內容猜
-- **各 SKILL.md 裡寫的 `python3 xxx.py` 是示意，不是照抄的字面指令**——這個工具包
-  給 Mac／Windows 學員共用，Windows 用 python.org 官方安裝版通常只有 `python`／`py`，
-  沒有 `python3`。在這個工具包裡**第一次**要跑任何 Python 指令前，先偵測這台電腦
-  實際可用的指令（依序試 `python3 --version` → `python --version` → `py --version`，
-  第一個成功的就是要用的），記住後整個對話都用同一個，不要每次都重測，也不要
-  看到文件寫 `python3` 就照打
+- **所有腳本都是 Node.js（`.mjs`），指令一律 `node xxx.mjs`**——不需要偵測
+  可用的指令，`node` 在 Mac 與 Windows 都一樣，Claude Code 本身就帶 Node。
+  **不要**執行 pip、npm 或任何安裝指令：這一版零安裝，需要的字型與函式庫
+  都已經在 `shared/assets/`、`shared/vendor/` 裡
 
 ## 跨平台（給 Windows 學員）
 
-- 上面「偵測 python 指令」的規則同樣適用於 `README.md` 裡使用者可能自己手動輸入的
-  `python3` 指令——引導使用者操作時，先確認他的機器實際能跑哪個指令再教他打
+- Windows 學員**不需要安裝 Python**，這一版完全不用 Python
 - 任何腳本的暫存輸出**不要**寫死 Unix 路徑（例如 `/tmp/...`）——Windows 沒有
-  `/tmp` 這個目錄，原生 Windows Python 也不會自動轉換這種路徑。暫存檔一律放在
-  這個工具包根目錄下的相對路徑（例如 `.tmp/`），需要時先建立該資料夾
+  `/tmp` 這個目錄。暫存檔一律放在這個工具包根目錄下的相對路徑（例如 `.tmp/`），
+  需要時先建立該資料夾
 
 ## 限制（永遠別碰的邊界）
 
 - **身分資料（姓名/身分證字號/電話/地址）不進對話上下文**——一律由
-  `fill_identity.py` 直接讀 Excel 寫入 docx，只回報成功/失敗
+  `fill_identity.mjs` 直接讀 Excel 寫入 docx，只回報成功/失敗
 - **寄信前一定先給使用者看完整信件內容並取得同意**，每次都要確認，
   不能因為上次同意過就跳過
 - **`case-external-record-entry` 的最終提交按鈕永遠由使用者自己按**，

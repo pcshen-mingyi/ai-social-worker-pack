@@ -18,7 +18,7 @@ description: 把家訪逐字稿或筆記整理成正式的「訪視紀錄」docx
 
 > 下面指令裡的 `scripts/`、`data/`、`templates/` 都是相對於**這個 skill 資料夾**
 > （也就是這份 SKILL.md 所在目錄）的路徑，執行時請換成完整路徑，例如
-> `python3 <skill 目錄>/scripts/fill_identity.py`。
+> `node <skill 目錄>/scripts/fill_identity.mjs`。
 
 ## 設定
 
@@ -26,17 +26,13 @@ description: 把家訪逐字稿或筆記整理成正式的「訪視紀錄」docx
 不需要另外設定就能直接體驗。下面步驟 1 的輸出位置、步驟 2 的 `--data`
 都直接讀這份設定。
 
-### -1. 環境檢查（第一次使用這個工具包時，靜默執行一次）
+### -1. 環境檢查（不需要了）
 
-在這個工具包裡**第一次**執行任何 skill 之前，先跑一次：
+這一版不需要安裝任何東西，也沒有環境檢查步驟。
 
-```bash
-python3 shared/scripts/ensure_dependencies.py
-```
-
-這支腳本會自動檢查並安裝缺少的 Python 套件，**使用者不需要自己動手**。
-只需要跑一次，之後每次使用都會很快跳過（已經裝好的東西不會重複裝）。
-不用特別跟使用者報告這個步驟的細節，除非安裝過程出錯才需要告知。
+腳本改用 Node.js 寫成，而 Claude Code 本身就帶 Node；讀字型與繪圖用的
+程式碼和字型檔都在 `shared/vendor/`、`shared/assets/` 裡。
+**不要**去跑 pip、npm 或任何安裝指令，也不要問使用者要不要安裝。
 
 ### 0. 找逐字稿（如果使用者沒有直接貼文字）
 
@@ -54,10 +50,10 @@ python3 shared/scripts/ensure_dependencies.py
 
 ### 2. 填身分欄位（不經過你）
 
-呼叫 `scripts/fill_identity.py`：
+呼叫 `scripts/fill_identity.mjs`：
 
 ```bash
-python3 scripts/fill_identity.py --case-id CASE-001 \
+node scripts/fill_identity.mjs --case-id CASE-001 \
   --data {shared/config.json 的 case_data_xlsx} \
   --docx 輸出檔.docx \
   --out 輸出檔.docx
@@ -119,11 +115,11 @@ python3 scripts/fill_identity.py --case-id CASE-001 \
 
 **寫入 docx**
 
-把 3-1～3-4 的內容整理成 JSON 檔（欄位名稱見 `scripts/fill_narrative.py` 開頭的說明），
+把 3-1～3-4 的內容整理成 JSON 檔（欄位名稱見 `scripts/fill_narrative.mjs` 開頭的說明），
 然後呼叫：
 
 ```bash
-python3 scripts/fill_narrative.py --docx 輸出檔.docx --out 輸出檔.docx --json 欄位.json
+node scripts/fill_narrative.mjs --docx 輸出檔.docx --out 輸出檔.docx --json 欄位.json
 ```
 
 這些內容本來就來自逐字稿本身，不像身分欄位需要保密，所以由你直接草擬即可。**誠實原則**：

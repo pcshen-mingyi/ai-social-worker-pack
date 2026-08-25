@@ -6,7 +6,7 @@ description: 用 Claude in Chrome 自動跑完 Google Cloud OAuth 設定（建�
 # GCP OAuth 自動設定
 
 `shared/references/google-api-setup.md` 描述的 6 個步驟，這個 skill 用 Claude in Chrome
-自動操作 Google Cloud Console 跑完前 5 步。**跑 `google_auth.py` 跳出瀏覽器要求
+自動操作 Google Cloud Console 跑完前 5 步。**跑 `google_auth.mjs` 跳出瀏覽器要求
 「允許」時一定要停下來等使用者自己點**——這是把「用這個帳號寄信」的權限交出去，
 任何情況都不能由 Claude 代按，包括這個 skill 本身也不例外。
 
@@ -65,24 +65,43 @@ Google 帳號（機構帳號或個人 Gmail 皆可）。
    如果 Downloads 資料夾裡有多個 client_secret_*.json（例如使用者之前也下載過
    別的），用檔案的建立時間挑最新的一個，並提醒使用者確認。
 
-7. **本機授權（唯一需要人工的一步）**：告訴使用者接下來會跳出瀏覽器要求登入、
-   按「允許」，然後執行：
+7. **本機授權（唯一需要人工的一步）**：**直接執行這個指令**，不要先問使用者、
+   也不要另外寫暫存腳本繞道——這支腳本本身就是為了直接跑而寫的：
    ```bash
-   python3 shared/scripts/google_auth.py
+   node shared/lib/google_auth.mjs
    ```
-   這一步結束後**停下來等待**，不要嘗試用 Claude in Chrome 去點那個「允許」
-   按鈕——即使技術上做得到也不可以，這個授權動作規定必須由帳號本人親自按。
+   跑下去之後會自動開啟使用者的瀏覽器（Mac 用 `open`、Windows 用 `start`），
+   跳出 Google 登入與權限請求畫面。
+
+   ⚠️ **這個指令會停在那裡等使用者按「允許」，這是正常的，不是卡住或沒反應。**
+   它在本機開了一個一次性的接收埠等瀏覽器把授權碼送回來，使用者按下「允許」
+   後才會自己結束並印出「授權完成」。**不要因為看起來沒反應就中斷它、改用別的
+   方法、或重跑一次**（重跑會換一個新的埠與 state，反而讓先前那個畫面失效）。
+
+   要跟使用者說的話，只需要這兩句：
+   - 瀏覽器會跳出來，請選擇要用來寄信的 Google 帳號
+   - 看到權限請求後按「允許」
+
+   如果瀏覽器沒有自動跳出來，把腳本印出的那個網址原樣貼給使用者，請他自己開。
+
+   **「允許」永遠由使用者本人點**，不要嘗試用 Claude in Chrome 去代按——
+   即使技術上做得到也不可以，這個授權動作規定必須由帳號本人親自按。
+
    跑完之後 `shared/.credentials/token.json` 會自動產生，之後不用再重跑。
+   腳本自己會印出憑證位置、授權範圍、能不能自動續期，看到就代表成功了。
 
 ## 收尾
 
-跑完後可以用這個確認整個設定生效：
-```bash
-python3 -c "
-import json
-t = json.load(open('shared/.credentials/token.json'))
-print('scopes:', t.get('scopes'))
-print('has refresh_token:', 'refresh_token' in t)
-"
+不需要另外下指令驗證——步驟 7 的腳本跑完就會印出：
+
 ```
-應該要看到 `gmail.send`、`gmail.modify` 兩個 scope 都在，而且 `has refresh_token: True`。
+授權完成。
+憑證已寫入：…/shared/.credentials/token.json
+授權範圍：https://www.googleapis.com/auth/gmail.send https://www.googleapis.com/auth/gmail.modify
+可自動續期：是
+```
+
+確認「授權範圍」兩個 scope 都在、「可自動續期」是「是」即可。
+
+已經授權過的人再跑一次不會重複跳瀏覽器，只會回報「這台電腦已經授權過了」——
+所以不確定狀態時直接跑這支就好，這是安全的。

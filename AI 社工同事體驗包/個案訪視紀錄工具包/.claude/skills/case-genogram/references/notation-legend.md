@@ -92,7 +92,7 @@
 
 判斷方式：
 
-1. 優先執行 `scripts/classify_scope.py --case-id {案號} --data {shared/config.json 的 case_data_xlsx}`
+1. 優先執行 `scripts/classify_scope.mjs --case-id {案號} --data {shared/config.json 的 case_data_xlsx}`
    （路徑同 `case-visit-record` 步驟 2 用的 xlsx）。這支腳本只會回報年齡區間分類
    （例如「老年案主｜scope=down2｜……」），**不會印出實際出生年月日**，維持身分
    資料不經過你的原則。

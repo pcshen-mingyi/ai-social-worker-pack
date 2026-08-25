@@ -13,6 +13,8 @@ https://github.com/pcshen-mingyi/ai-social-worker-pack/releases/latest/download/
 
 下載後解壓縮，會得到「AI 社工同事體驗包」資料夾。
 
+Mac 與 Windows 都可以用，**不需要安裝 Python 或任何套件**。
+
 ## 安裝與開始
 
 1. 解壓縮後，把裡面的**三個資料夾**（`個案訪視紀錄工具包`、`明怡服務紀錄資料夾`、`個人工作`）
@@ -21,7 +23,8 @@ https://github.com/pcshen-mingyi/ai-social-worker-pack/releases/latest/download/
 3. 跟 Claude 說：「幫我整理 CASE-001 的訪視紀錄」。
 
 其餘設定（個案資料表路徑、主管信箱、姓名、系統網址）都已經幫你填好，
-Python 套件由 Claude Code 第一次執行時自動安裝，**體驗前不需要準備任何東西**。
+**體驗前不需要準備任何東西，也不需要安裝任何套件**——所有腳本都是 Node.js，
+Claude Code 本身就帶了 Node，Mac 與 Windows 都一樣。
 
 詳細說明請看包內的 `個案訪視紀錄工具包/README.md`。
 
