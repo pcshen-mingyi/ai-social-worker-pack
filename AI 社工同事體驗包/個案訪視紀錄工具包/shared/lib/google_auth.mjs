@@ -101,9 +101,28 @@ async function runLoopbackFlow() {
   console.log(authUrl.toString());
   openBrowser(authUrl.toString());
 
-  const code = await waitForCode;
+  // 加逾時：授權被 Google 硬擋時（帳號不在測試使用者清單上），授權碼永遠不會
+  // 回來，不設上限就會無限等待——學員同時面對被擋的瀏覽器和卡住的終端機。
+  const TIMEOUT_MIN = 5;
+  let timer;
+  const code = await Promise.race([
+    waitForCode,
+    new Promise((res) => { timer = setTimeout(() => res(undefined), TIMEOUT_MIN * 60_000); }),
+  ]);
+  clearTimeout(timer);
   server.close();
-  if (!code) throw new Error("授權未完成");
+
+  if (code === undefined) {
+    throw new Error(
+      `等了 ${TIMEOUT_MIN} 分鐘還沒收到授權結果。最常見的原因是瀏覽器顯示\n` +
+      "「已封鎖存取權：… 未完成 Google 驗證程序」——那表示這個 Google 帳號還沒被\n" +
+      "加進 OAuth 同意畫面的「測試使用者」清單（目標對象選「外部」時必須加）。\n" +
+      "那個畫面是硬擋，沒有「進階」可以點。\n" +
+      "解法：到 console.cloud.google.com/auth/audience 的「測試使用者」把這個帳號\n" +
+      "加進去，然後重新執行這支腳本即可。詳見 shared/references/google-api-setup.md"
+    );
+  }
+  if (!code) throw new Error("授權未完成（瀏覽器回報的不是成功結果，請重新執行一次）");
 
   const res = await fetch(TOKEN_URI, {
     method: "POST",
