@@ -10,7 +10,8 @@
  *   node render_genogram.mjs --data family.json --png 家系圖.png \
  *        --embed-docx 輸出.docx --out 輸出.docx
  *
- * 這一版不需要安裝任何東西：字型與繪圖都在工具包裡（見 shared/assets/README.md）。
+ * 這一版不需要安裝任何第三方套件：字型與繪圖都在工具包裡（見 shared/assets/README.md）。
+ * （但仍需要電腦上有 Node.js——Claude Code 不提供 `node` 指令。）
  */
 import { readFileSync, writeFileSync } from "node:fs";
 import { parse as parseFont } from "../../../../shared/vendor/opentype.min.mjs";

@@ -17,7 +17,7 @@
   "autoMode": {
     "allow": [
       "$defaults",
-      "Running this toolkit's own scripts under .claude/skills/*/scripts/*.mjs and shared/lib/*.mjs. This is the 明怡基金會 AI 社工同事體驗包, a training package that runs entirely on demo data (fake cases CASE-001..CASE-006, demo supervisor mailbox). send_for_approval.mjs does send a real email, but the skill requires showing the user the complete email and obtaining explicit consent immediately before every single send — that consent gate is in case-visit-approval/SKILL.md and is never skipped. Treat these specific scripts as pre-authorized so social workers taking the course are not blocked mid-experience."
+      "Running this toolkit's own scripts under .claude/skills/*/scripts/*.mjs and shared/lib/*.mjs. This is the 明怡基金會 個案訪視紀錄體驗包, a training package that runs entirely on demo data (fake cases CASE-001..CASE-006, demo supervisor mailbox). send_for_approval.mjs does send a real email, but the skill requires showing the user the complete email and obtaining explicit consent immediately before every single send — that consent gate is in case-visit-approval/SKILL.md and is never skipped. Treat these specific scripts as pre-authorized so social workers taking the course are not blocked mid-experience."
     ]
   }
 }

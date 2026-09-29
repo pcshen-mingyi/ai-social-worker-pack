@@ -1,4 +1,4 @@
-# 個案訪視紀錄工具包
+# AI社工同事
 
 明怡基金會「AI Builder 成長營」課程中第一天「AI 社工同事體驗」的工具包：把家訪逐字稿，
 自動整理成正式訪視紀錄、畫家系圖、寄給主管確認歸檔、登打進個案管理系統。
@@ -43,13 +43,18 @@ shared/scripts/         跨 skill 共用（環境檢查、setup、Gmail OAuth）
   對應 `CASE-001`、`CASE-006 訪視逐字稿.docx` 對應 `CASE-006`；使用者沒給
   案號又不是用這兩個 demo 檔時，先問清楚案號，不要用逐字稿內容猜
 - **所有腳本都是 Node.js（`.mjs`），指令一律 `node xxx.mjs`**——不需要偵測
-  可用的指令，`node` 在 Mac 與 Windows 都一樣，Claude Code 本身就帶 Node。
-  **不要**執行 pip、npm 或任何安裝指令：這一版零安裝，需要的字型與函式庫
-  都已經在 `shared/assets/`、`shared/vendor/` 裡
+  可用的指令，`node` 在 Mac 與 Windows 都一樣。
+  **不要**執行 pip、npm 或任何安裝套件的指令：這一版不用任何第三方套件，
+  需要的字型與函式庫都已經在 `shared/assets/`、`shared/vendor/` 裡
+- **但這台電腦必須有 Node.js。** Claude Code 是獨立的執行檔，**不提供 `node` 指令**
+  （2026-08-25 實測：App 套件裡沒有 node 執行檔），乾淨的 Windows 與 macOS 也沒有內建。
+  第一個腳本跑之前先確認 `node --version`；找不到的話**不要硬跑**，
+  告訴學員這不是他弄壞的，請他到 nodejs.org 下載 LTS 版安裝（只需一次），
+  或用「MYmate 小白包」讓 MYmate 幫他裝
 
 ## 跨平台（給 Windows 學員）
 
-- Windows 學員**不需要安裝 Python**，這一版完全不用 Python
+- Windows 學員**不需要安裝 Python**，這一版完全不用 Python（但需要 Node.js，見上）
 - 任何腳本的暫存輸出**不要**寫死 Unix 路徑（例如 `/tmp/...`）——Windows 沒有
   `/tmp` 這個目錄。暫存檔一律放在這個工具包根目錄下的相對路徑（例如 `.tmp/`），
   需要時先建立該資料夾
